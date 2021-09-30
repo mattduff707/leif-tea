@@ -1,27 +1,33 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
-    title: "leif-tea",
+    siteUrl: 'https://www.yourdomain.tld',
+    title: 'leif-tea',
   },
   plugins: [
     {
-      resolve: "gatsby-source-shopify",
+      resolve: 'gatsby-source-shopify',
       options: {
-        shopName: "https://leiftea.myshopify.com/",
-        accessToken: "771f13d9d7c6f8e41555a17fc3fab9f0",
+        shopName: 'leif',
+        accessToken: process.env.GATSBY_STOREFRONT_ACCESS_TOKEN,
+        password: process.env.SHOPIFY_SHOP_PASSWORD,
+        storeUrl: process.env.GATSBY_SHOPIFY_STORE_URL,
       },
     },
-    "gatsby-plugin-styled-components",
-    "gatsby-plugin-image",
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
+    'gatsby-plugin-styled-components',
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
     {
-      resolve: "gatsby-source-filesystem",
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: "images",
-        path: "./src/images/",
+        name: 'images',
+        path: './src/images/',
       },
-      __key: "images",
+      __key: 'images',
     },
   ],
 };
