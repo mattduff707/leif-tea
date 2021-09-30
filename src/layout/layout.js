@@ -4,6 +4,13 @@ import { StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    --color-main: hsl(0,0%,0%);
+    --color-highlight: hsl(156,65%,28%);
+  }
+
+
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -27,14 +34,16 @@ const layout = ({ children }) => {
       <Header>
         <Navbar>
           <NavList>
-            <StaticImage
-              placeholder="blurred"
-              layout="fixed"
-              width={65}
-              height={87}
-              src="../images/logoSmall.png"
-              alt="Leif logo"
-            />
+            <LogoWrapper>
+              <StaticImage
+                placeholder="blurred"
+                layout="fixed"
+                width={51}
+                height={67}
+                src="../images/logoSmall.png"
+                alt="Leif logo"
+              />
+            </LogoWrapper>
             <NavLink to="/about">about</NavLink>
             <NavLink to="/shop">shop</NavLink>
             <NavLink to="/contact">contact</NavLink>
@@ -76,10 +85,14 @@ const NavList = styled.ul`
   align-items: center;
   /* border: 2px solid black; */
 `;
+
+const LogoWrapper = styled.div`
+  padding: 0px 15px;
+`;
 const NavLink = styled(Link)`
   color: black;
   padding: 10px 15px;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 `;
 const MainBody = styled.main`
   grid-area: content;
