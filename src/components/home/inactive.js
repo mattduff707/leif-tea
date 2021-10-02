@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import Btn from '../btn';
+import React from "react";
+import styled from "styled-components";
+import Btn from "../btn";
 
 const Inactive = ({ startGuide }) => {
   return (

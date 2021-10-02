@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Heading from '../heading';
-import Option from './option';
-import greenTea from '../../images/greenTea.jpg';
-import eitherTea from '../../images/eitherTea.png';
-import blackTea from '../../images/blackTea.jpg';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Heading from "../heading";
+import Option from "./option";
+import greenTea from "../../images/greenTea.jpg";
+import eitherTea from "../../images/eitherTea.png";
+import blackTea from "../../images/blackTea.jpg";
 
-const Boxes = () => {
-  const greenTeaLabel = 'Green Tea';
-  const bothTeaLabel = 'Both';
-  const blackTeaLabel = 'Black Tea';
+const Boxes = ({ selectBox }) => {
+  const greenTeaLabel = "Green Tea";
+  const bothTeaLabel = "Both";
+  const blackTeaLabel = "Black Tea";
 
-  const [selection, setSelection] = useState(greenTeaLabel);
+  const [selection, setSelection] = useState(null);
 
   const handleClick = (e) => {
     setSelection(() => e.target.value);
+    selectBox(e.target.value);
   };
   return (
     <Wrapper>
       <Title>What tea do you prefer?</Title>
       <OptionsList>
         <Option
+          type="radio"
           label={greenTeaLabel}
           name="box"
           img={greenTea}
@@ -28,6 +30,7 @@ const Boxes = () => {
           handleClick={handleClick}
         />
         <Option
+          type="radio"
           label={bothTeaLabel}
           name="box"
           img={eitherTea}
@@ -35,6 +38,7 @@ const Boxes = () => {
           handleClick={handleClick}
         />
         <Option
+          type="radio"
           label={blackTeaLabel}
           name="box"
           img={blackTea}
@@ -44,8 +48,9 @@ const Boxes = () => {
       </OptionsList>
       <Description>
         <i>
-          Each box will include 4 bags of tea. Each bag amounts to 16 cups of tea. This will allow about 2 cups of tea
-          per day for a month before a box runs out.
+          Each box will include 4 bags of tea. Each bag amounts to 16 cups of
+          tea. This will allow about 2 cups of tea per day for a month before a
+          box runs out.
         </i>
       </Description>
     </Wrapper>
