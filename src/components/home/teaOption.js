@@ -16,8 +16,6 @@ const TeaOption = ({ isChecked, handleClick, box }) => {
         isChecked={isChecked}
         handleClick={handleClick}
       />
-
-      {/* {isChecked && <ImgView imgArr={box.images} />} */}
     </Wrapper>
   );
 };

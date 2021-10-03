@@ -1,43 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TeaOption from './teaOption';
 import OptionsList from './optionsList';
 import styled from 'styled-components';
+import Btn from '../btn';
 
-const Selection = ({ boxes }) => {
-  const [selection, setSelection] = useState([]);
-
-  const isIncluded = (val, arr) => arr.includes(val);
-  const handleClick = (e) => {
-    const val = e.target.value;
-
-    if (isIncluded(val, selection)) {
-      setSelection(() => selection.filter((item) => item !== val));
-    } else {
-      setSelection([...selection, val]);
-    }
-  };
-
-  // return (
-  //   <>
-  //     {boxes.map((e, index) => {
-  //       console.log(e.node.images);
-  //       return (
-  //         <div key={index}>
-  //           <h1>{e.node.title}</h1>
-  //           {e.node.images.map((img, index) => {
-  //             const image = getImage(img);
-  //             console.log(img);
-  //             return (
-  //               <ImgWrap key={index}>
-  //                 <GatsbyImage image={image} alt={img.altText} />
-  //               </ImgWrap>
-  //             );
-  //           })}
-  //         </div>
-  //       );
-  //     })}
-  //   </>
-  // );
+const Selection = ({ boxes, selection, makeSelection, isIncluded, startCheckout }) => {
   return (
     <Wrapper>
       <OptionsList>
@@ -46,15 +13,27 @@ const Selection = ({ boxes }) => {
             <TeaOption
               key={index}
               box={box.node}
-              handleClick={handleClick}
+              handleClick={makeSelection}
               isChecked={isIncluded(box.node.id, selection)}
             ></TeaOption>
           );
         })}
       </OptionsList>
+      {selection.length > 0 && (
+        <StyledBtn isValid={selection.length > 0} handleClick={startCheckout}>
+          Next
+        </StyledBtn>
+      )}
     </Wrapper>
   );
 };
-const Wrapper = styled.section``;
+const Wrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const StyledBtn = styled(Btn)`
+  padding: 10px 20px;
+`;
 
 export default Selection;

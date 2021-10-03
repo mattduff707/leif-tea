@@ -10,7 +10,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 const Guide = () => {
   const [isInactive, setIsInactive] = useState(true);
   const [boxes, setBoxes] = useState(false);
-  const [isSelection, setIsSelection] = useState(false);
+  const [selection, setSelection] = useState([]);
   const [isCheckout, setIsCheckout] = useState(false);
   const [products, setProducts] = useState([]);
   // const [guideCart, setGuideCart] = useState([]);
@@ -51,8 +51,15 @@ const Guide = () => {
     const productsArr = nodesArr.filter((product) => product.node.tags.includes(tag));
     setBoxes(productsArr);
   };
-  const startSelection = (tag) => {
-    setIsSelection(true);
+  const isIncluded = (val, arr) => arr.includes(val);
+  const makeSelection = (e) => {
+    const val = e.target.value;
+
+    if (isIncluded(val, selection)) {
+      setSelection(() => selection.filter((item) => item !== val));
+    } else {
+      setSelection([...selection, val]);
+    }
   };
   const startCheckout = () => {
     setIsCheckout(true);
@@ -68,7 +75,15 @@ const Guide = () => {
           <Boxes selectBox={selectBox} />
         </>
       )}
-      {boxes && <Selection boxes={boxes} />}
+      {boxes && (
+        <Selection
+          boxes={boxes}
+          makeSelection={makeSelection}
+          selection={selection}
+          isIncluded={isIncluded}
+          startCheckout={startCheckout}
+        />
+      )}
       {isCheckout && <Checkout />}
     </Wrapper>
   );

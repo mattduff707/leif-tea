@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Btn = ({ classname, children, handleClick }) => {
+const Btn = ({ className, children, handleClick }) => {
   return (
-    <StyledBtn classname={classname} onClick={handleClick}>
+    <StyledBtn className={className} onClick={handleClick}>
       <BtnText>{children}</BtnText>
     </StyledBtn>
   );
