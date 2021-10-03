@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Boxes from "./boxes";
-import Checkout from "./checkout";
-import Inactive from "./inactive";
-import Selection from "./selection";
-import Heading from "../heading";
-import { useStaticQuery, graphql } from "gatsby";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Boxes from './boxes';
+import Checkout from './checkout';
+import Inactive from './inactive';
+import Selection from './selection';
+import Heading from '../heading';
+import { useStaticQuery, graphql } from 'gatsby';
 
 const Guide = () => {
   const [isInactive, setIsInactive] = useState(true);
@@ -23,6 +23,11 @@ const Guide = () => {
             id
             title
             tags
+            images {
+              src
+              gatsbyImageData(layout: FULL_WIDTH)
+              altText
+            }
           }
         }
       }
@@ -43,9 +48,7 @@ const Guide = () => {
     setIsInactive(false);
   };
   const selectBox = (tag) => {
-    const productsArr = nodesArr.filter((product) =>
-      product.node.tags.includes(tag)
-    );
+    const productsArr = nodesArr.filter((product) => product.node.tags.includes(tag));
     setBoxes(productsArr);
   };
   const startSelection = (tag) => {
@@ -73,7 +76,7 @@ const Guide = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-  padding-top: 20px;
+  padding: 20px 0px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
