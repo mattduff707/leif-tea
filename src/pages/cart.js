@@ -4,6 +4,7 @@ import Layout from '../layout/layout';
 import CartContext from '../providers/cartProvider';
 import CartItem from '../components/cart/cartItem';
 import Heading from '../components/heading';
+import Overview from '../components/cart/overview';
 
 const Cart = () => {
   return (
@@ -12,12 +13,13 @@ const Cart = () => {
         {(cart) => (
           <Wrapper>
             <Title tag="h1">Shopping Cart</Title>
+            <Overview getTotal={cart.getTotal} />
             {cart.cartContents.length < 1 ? (
               <Heading>Cart is empty</Heading>
             ) : (
               <CartList>
                 {cart.cartContents.map((item) => (
-                  <CartItem item={item.node} />
+                  <CartItem removeFromCart={cart.removeFromCart} item={item.node} />
                 ))}
               </CartList>
             )}
@@ -29,11 +31,11 @@ const Cart = () => {
 };
 
 const Wrapper = styled.section`
-  width: 100%;
+  max-width: 1600px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
   /* border: 2px solid red; */
 `;
 const Title = styled(Heading)`
@@ -47,6 +49,7 @@ const CartList = styled.ul`
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 export default Cart;

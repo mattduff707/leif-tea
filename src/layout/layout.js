@@ -138,6 +138,9 @@ const NavLink = styled(Link)`
 `;
 const MainBody = styled.main`
   grid-area: content;
+  display: flex;
+  justify-content: center;
+  padding: 0px 10px 50px;
 `;
 
 export default Layout;
