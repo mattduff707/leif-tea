@@ -2,8 +2,16 @@ import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
+import CartContext from '../providers/cartProvider';
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    --color-main: hsl(0,0%,0%);
+    --color-highlight: hsl(156,65%,28%);
+  }
+
+
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -20,29 +28,53 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const layout = ({ children }) => {
+const Layout = ({ children }) => {
+  const activeStyle = {
+    backgroundColor: 'var(--color-highlight)',
+    color: 'white',
+  };
+
   return (
-    <Wrapper>
-      <GlobalStyle />
-      <Header>
-        <Navbar>
-          <NavList>
-            <StaticImage
-              placeholder="blurred"
-              layout="fixed"
-              width={65}
-              height={87}
-              src="../images/logoSmall.png"
-              alt="Leif logo"
-            />
-            <NavLink to="/about">about</NavLink>
-            <NavLink to="/shop">shop</NavLink>
-            <NavLink to="/contact">contact</NavLink>
-          </NavList>
-        </Navbar>
-      </Header>
-      <MainBody>{children}</MainBody>
-    </Wrapper>
+    <CartContext.Consumer>
+      {(cart) => (
+        <Wrapper>
+          <GlobalStyle />
+          <>
+            <Header>
+              <Navbar>
+                <NavList>
+                  <LogoWrapper to="/">
+                    <StaticImage
+                      placeholder="blurred"
+                      layout="fixed"
+                      width={51}
+                      height={67}
+                      src="../images/logoSmall.png"
+                      alt="Leif logo"
+                    />
+                  </LogoWrapper>
+                  <NavLink activeStyle={activeStyle} to="/about">
+                    about
+                  </NavLink>
+                  <NavLink activeStyle={activeStyle} to="/shop">
+                    shop
+                  </NavLink>
+                  <NavLink activeStyle={activeStyle} to="/contact">
+                    contact
+                  </NavLink>
+                  <NavLink activeStyle={activeStyle} to="/cart">
+                    cart({cart.cartContents.length})
+                  </NavLink>
+                </NavList>
+              </Navbar>
+            </Header>
+            <MainBody cart={cart.cartContents} addToCart={cart.addToCart}>
+              {children}
+            </MainBody>
+          </>
+        </Wrapper>
+      )}
+    </CartContext.Consumer>
   );
 };
 const Wrapper = styled.div`
@@ -76,13 +108,36 @@ const NavList = styled.ul`
   align-items: center;
   /* border: 2px solid black; */
 `;
+
+const LogoWrapper = styled(Link)`
+  padding: 0px 15px;
+`;
 const NavLink = styled(Link)`
   color: black;
   padding: 10px 15px;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  text-decoration: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:after {
+    content: '';
+    height: 6px;
+    width: 0%;
+    background-color: var(--color-highlight);
+    display: block;
+    transition: width;
+    transition-duration: 0.4s;
+    transition-timing-function: ease;
+  }
+  &:hover:after {
+    width: 100%;
+  }
 `;
 const MainBody = styled.main`
   grid-area: content;
 `;
 
-export default layout;
+export default Layout;

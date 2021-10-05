@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
 
-const defaultState = {
-  name: 'green tea',
-  price: '$12',
-};
+const defaultState = [];
 
-const cartContext = React.createContext(defaultState);
+const CartContext = React.createContext(defaultState);
 
-const CartProvider = (props) => {
-  const [cartContents, setCartContents] = useState([{ name: 'green tea', price: '$12' }]);
+const CartProvider = ({ children }) => {
+  const [cartContents, setCartContents] = useState(defaultState);
 
-  const addToCart = (obj) => {
-    setCartContents(() => [...cartContents, obj]);
+  const addToCart = (arr) => {
+    const newCart = [...cartContents, arr].flat();
+    const filteredCart = newCart.filter((item, index) => newCart.indexOf(item) === index);
+    setCartContents(() => filteredCart);
   };
 
   return (
-    <cartContext.Provider
+    <CartContext.Provider
       value={{
-        cartContents,
+        cartContents: cartContents,
         addToCart: addToCart,
       }}
     >
-      {props.children}
-    </cartContext.Provider>
+      {children}
+    </CartContext.Provider>
   );
 };
 
-export default cartContext;
+export default CartContext;
 export { CartProvider };
