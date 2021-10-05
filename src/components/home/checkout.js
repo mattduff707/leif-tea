@@ -4,6 +4,7 @@ import CheckoutItem from './checkoutItem';
 import styled from 'styled-components';
 import Heading from '../heading';
 import Btn from '../btn';
+import { Link } from 'gatsby';
 
 const Checkout = ({ products, selection, deleteItem, cart, addToCart }) => {
   // return <CartContext.Consumer>{(cart) => <div>Checkout</div>}</CartContext.Consumer>;
@@ -29,9 +30,11 @@ const Checkout = ({ products, selection, deleteItem, cart, addToCart }) => {
         })}
       </ItemWrap>
       <TotalPrice>Total: ${total}</TotalPrice>
-      <Btn handleClick={handleCheckout}>Add to cart</Btn>
+      <Link to="/cart">
+        <Btn handleClick={handleCheckout}>Add to cart</Btn>
+      </Link>
       <CartTotal>
-        <i>{cart.length > 0 ? `Cart Total: $${cartTotal}` : `Cart is currently Empty`}</i>
+        <i>{cart.length > 0 ? `Cart Total: $${cartTotal} before adding` : `Cart is currently Empty`}</i>
       </CartTotal>
     </Wrapper>
   );

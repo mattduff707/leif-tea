@@ -23,7 +23,6 @@ const CartItem = ({ item }) => {
             </TeaItem>
           );
         })}
-        ``
       </TeaWrap>
     </Wrapper>
   );
