@@ -12,12 +12,21 @@ const CartProvider = ({ children }) => {
     const filteredCart = newCart.filter((item, index) => newCart.indexOf(item) === index);
     setCartContents(() => filteredCart);
   };
+  const removeFromCart = (id) => {
+    const newCart = cartContents.filter((item) => item.node.id !== id);
+    setCartContents(newCart);
+  };
+  const getTotal = () => {
+    return cartContents.reduce((acc, val) => acc + parseInt(val.node.priceRangeV2.maxVariantPrice.amount), 0);
+  };
 
   return (
     <CartContext.Provider
       value={{
         cartContents: cartContents,
         addToCart: addToCart,
+        removeFromCart: removeFromCart,
+        getTotal: getTotal,
       }}
     >
       {children}
