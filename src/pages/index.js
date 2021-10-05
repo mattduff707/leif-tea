@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Guide from '../components/home/guide';
 import HomeIcon from '../components/home/homeIcon';
 import Layout from '../layout/layout';
+
 // import cartContext from '../providers/cartProvider';
 
 const IndexPage = () => {

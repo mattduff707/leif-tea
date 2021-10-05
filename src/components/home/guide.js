@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Boxes from "./boxes";
-import Checkout from "./checkout";
-import Inactive from "./inactive";
-import Selection from "./selection";
-import Heading from "../heading";
-import { useStaticQuery, graphql } from "gatsby";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Boxes from './boxes';
+import Checkout from './checkout';
+import Inactive from './inactive';
+import Selection from './selection';
+import Heading from '../heading';
+import CartContext from '../../providers/cartProvider';
+import { useStaticQuery, graphql } from 'gatsby';
 
 const Guide = () => {
   const [isInactive, setIsInactive] = useState(true);
@@ -16,7 +17,7 @@ const Guide = () => {
   // const [guideCart, setGuideCart] = useState([]);
   const data = useStaticQuery(graphql`
     query MyQuery {
-      allShopifyProduct {
+      allShopifyProduct(sort: { fields: [title] }) {
         edges {
           node {
             handle
@@ -54,9 +55,7 @@ const Guide = () => {
     setIsInactive(false);
   };
   const selectBox = (tag) => {
-    const productsArr = nodesArr.filter((product) =>
-      product.node.tags.includes(tag)
-    );
+    const productsArr = nodesArr.filter((product) => product.node.tags.includes(tag));
     setSelection([]);
     setBoxes(productsArr);
   };
@@ -70,36 +69,59 @@ const Guide = () => {
       setSelection([...selection, val]);
     }
   };
+
+  useEffect(() => {
+    if (selection.length < 1) {
+      setIsCheckout(false);
+    }
+  }, [setIsCheckout, selection]);
+
   const startCheckout = () => {
     setIsCheckout(true);
   };
+  const deleteItem = (id) => {
+    setSelection(() => selection.filter((val) => val !== id));
+  };
 
   return (
-    <Wrapper>
-      {isInactive && <Inactive startGuide={startGuide} />}
+    <CartContext.Consumer>
+      {(cart) => (
+        <Wrapper>
+          {isInactive && <Inactive startGuide={startGuide} />}
 
-      {!isInactive && (
-        <>
-          <Title tag="h1">Let's find you the perfect box</Title>
-          <Boxes selectBox={selectBox} />
-        </>
+          {!isInactive && (
+            <>
+              <Title tag="h1">Let's find you the perfect box</Title>
+              <Boxes selectBox={selectBox} />
+            </>
+          )}
+          {boxes && (
+            <Selection
+              boxes={boxes}
+              makeSelection={makeSelection}
+              selection={selection}
+              isIncluded={isIncluded}
+              startCheckout={startCheckout}
+            />
+          )}
+
+          {isCheckout && (
+            <Checkout
+              cart={cart.cartContents}
+              addToCart={cart.addToCart}
+              products={products}
+              selection={selection}
+              deleteItem={deleteItem}
+            />
+          )}
+        </Wrapper>
       )}
-      {boxes && (
-        <Selection
-          boxes={boxes}
-          makeSelection={makeSelection}
-          selection={selection}
-          isIncluded={isIncluded}
-          startCheckout={startCheckout}
-        />
-      )}
-      {isCheckout && <Checkout />}
-    </Wrapper>
+    </CartContext.Consumer>
   );
 };
 
 const Wrapper = styled.div`
-  width: 100%;
+  max-width: 1600px;
   padding: 20px 0px 100px;
   display: flex;
   flex-direction: column;

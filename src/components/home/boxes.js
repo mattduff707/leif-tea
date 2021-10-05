@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Heading from "../heading";
-import Option from "./option";
-import greenTea from "../../images/greenTea.jpg";
-import eitherTea from "../../images/eitherTea.png";
-import blackTea from "../../images/blackTea.jpg";
-import OptionsList from "./optionsList";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Heading from '../heading';
+import Option from './option';
+import greenTea from '../../images/greenTea.jpg';
+import eitherTea from '../../images/eitherTea.png';
+import blackTea from '../../images/blackTea.jpg';
+import OptionsList from './optionsList';
 
 const Boxes = ({ selectBox }) => {
-  const greenTeaLabel = "Green Tea";
-  const bothTeaLabel = "Both";
-  const blackTeaLabel = "Black Tea";
+  const greenTeaLabel = 'Green Tea';
+  const bothTeaLabel = 'Both Teas';
+  const blackTeaLabel = 'Black Tea';
 
   const [selection, setSelection] = useState(null);
 
@@ -52,9 +52,8 @@ const Boxes = ({ selectBox }) => {
       </OptionsList>
       <Description>
         <i>
-          Each box will include 4 bags of tea. Each bag amounts to 16 cups of
-          tea. This will allow about 2 cups of tea per day for a month before a
-          box runs out.
+          Each box will include 4 bags of tea. Each bag amounts to 16 cups of tea. This will allow about 2 cups of tea
+          per day for a month before a box runs out.
         </i>
       </Description>
     </Wrapper>
@@ -68,13 +67,14 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
 `;
-const Title = styled(Heading)``;
+const Title = styled(Heading)`
+  font-size: 1.8rem;
+`;
 
 const Description = styled.p`
   font-size: 1.2rem;
   max-width: 800px;
   font-weight: 600;
-  padding-bottom: 20px;
 `;
 
 export default Boxes;

@@ -22,6 +22,7 @@ const StyledBtn = styled.button`
   transition: color;
   transition-duration: 0.2s;
   transition-timing-function: ease;
+  cursor: pointer;
 
   &:before {
     display: block;
