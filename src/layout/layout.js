@@ -32,6 +32,7 @@ const Layout = ({ children }) => {
   const activeStyle = {
     backgroundColor: 'var(--color-highlight)',
     color: 'white',
+    borderRadius: '15px',
   };
 
   return (

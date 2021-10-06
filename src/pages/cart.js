@@ -13,15 +13,18 @@ const Cart = () => {
         {(cart) => (
           <Wrapper>
             <Title tag="h1">Shopping Cart</Title>
-            <Overview getTotal={cart.getTotal} />
+
             {cart.cartContents.length < 1 ? (
               <Heading>Cart is empty</Heading>
             ) : (
-              <CartList>
-                {cart.cartContents.map((item) => (
-                  <CartItem removeFromCart={cart.removeFromCart} item={item.node} />
-                ))}
-              </CartList>
+              <>
+                <Overview getTotal={cart.getTotal} />
+                <CartList>
+                  {cart.cartContents.map((item) => (
+                    <CartItem removeFromCart={cart.removeFromCart} item={item.node} />
+                  ))}
+                </CartList>
+              </>
             )}
           </Wrapper>
         )}
